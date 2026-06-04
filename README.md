@@ -1,33 +1,42 @@
-# 🦊 PASTOR GUARDIAN — Sistema de Detección Inteligente de Zorros para Protección de Ganado Ovino
+# 🦊 GUARDIÁN CONTRA ZORROS — Sistema de Vigilancia Inteligente para Protección de Animales de Granja
 
 ## 1. INTRODUCCIÓN Y NECESIDAD DEL PROYECTO
 
-La **depredación por zorros** representa una amenaza constante para la ganadería ovina, especialmente durante la temporada de parición, donde corderos recién nacidos son vulnerables a ataques. Los métodos tradicionales de protección (pastores nocturnos, cercas, perros guardianes) son costosos, limitados o no están disponibles para pequeños y medianos productores.
+La **depredación por zorros** representa una amenaza constante para diversas especies animales en entornos rurales y de granja. Los zorros son depredadores oportunistas que atacan:
 
-**Pastor Guardian** propone una solución de **visión por computadora en tiempo real** utilizando un modelo YOLO11 (You Only Look Once) entrenado específicamente para detectar zorros mediante una cámara web, activando alertas sonoras y visuales para ahuyentar al depredador y notificar al pastor.
+- **Ovinos** (corderos recién nacidos, especialmente durante la temporada de parición)
+- **Aves de corral** (gallinas, pollos, patos en gallineros)
+- **Cuyes / conejos** (en cuyerías y conejeras)
+- **Otros animales pequeños** en criaderos abiertos o semiabiertos
+
+Los métodos tradicionales de protección (pastores nocturnos, cercas, perros guardianes) son costosos, limitados o no están disponibles para pequeños y medianos productores.
+
+**Guardían Contra Zorros** propone una solución de **visión por computadora en tiempo real** utilizando un modelo YOLO11 (You Only Look Once) entrenado específicamente para detectar zorros mediante una cámara web, activando alertas sonoras y visuales para ahuyentar al depredador y notificar al cuidador.
 
 ### 1.1 Problemática
 
-- Ataques nocturnos de zorros a corderos recién nacidos
-- Pérdidas económicas significativas para pequeños productores
-- Ausencia de sistemas automatizados de bajo costo
-- Dificultad de monitoreo humano 24/7 en campos extensivos
+- Ataques nocturnos de zorros a corderos, gallinas, cuyes y otras presas
+- Pérdidas económicas significativas para pequeños y medianos productores
+- Ausencia de sistemas automatizados de bajo costo y fácil instalación
+- Dificultad de monitoreo humano 24/7 en múltiples puntos vulnerables
+- Estrés y muerte de animales en gallineros, cuyerías y criaderos abiertos
 
 ### 1.2 Solución Propuesta
 
 Sistema de detección automatizada que:
-1. Captura video en tiempo real mediante cámara web
+1. Captura video en tiempo real mediante cámara web o cámara IP
 2. Procesa cada frame con un detector YOLO11 entrenado para reconocer zorros
 3. Dibuja cuadros delimitadores (bounding boxes) sobre los zorros detectados
-4. Activa sirenas y alertas de voz para ahuyentar al animal
-5. Notifica al ganadero vía interfaz web accesible desde cualquier dispositivo
+4. Activa sirenas y alertas de voz para ahuyentar al depredador
+5. Notifica al cuidador vía interfaz web accesible desde cualquier dispositivo
+6. Funciona en **gallineros, cuyerías, corrales de ovejas o cualquier criadero abierto**
 
 ---
 
 ## 2. OBJETIVOS
 
 ### Objetivo General
-Desarrollar e implementar un sistema de detección automática de zorros basado en visión por computadora (YOLO11) para la protección del ganado ovino.
+Desarrollar e implementar un sistema de detección automática de zorros basado en visión por computadora (YOLO11) para la protección de animales de granja (ovinos, aves de corral, cuyes, conejos y otros) vulnerables a ataques de zorros.
 
 ### Objetivos Específicos
 
@@ -352,14 +361,15 @@ D:\SOLEDAD\
 
 ## 7. CONCLUSIONES
 
-El sistema **Pastor Guardian** demuestra que es posible construir un detector de zorros de **alto rendimiento** (mAP@50 = 98.60%) con recursos accesibles:
+El sistema **Guardían Contra Zorros** demuestra que es posible construir un detector de zorros de **alto rendimiento** (mAP@50 = 98.60%) con recursos accesibles:
 
 - **Solo 721 imágenes** de zorros fueron suficientes gracias a transfer learning (YOLO11 preentrenado en COCO) y una fuerte aumentación de datos
 - El **pipeline automatizado** permite reproducir todo el flujo desde cero: auditoría → limpieza → consolidación → entrenamiento → validación
 - La **aplicación web** despliega el modelo en tiempo real con alertas visuales y sonoras
 - **Docker** facilita el despliegue en cualquier computadora con GPU NVIDIA
+- Es aplicable en **múltiples escenarios**: corrales de ovejas, gallineros, cuyerías, conejeras y cualquier criadero abierto vulnerable a zorros
 
-El sistema está listo para pruebas de campo y puede ser mejorado incrementalmente agregando más datos (especialmente imágenes de ovejas para discriminación multiclase) y adaptándolo a condiciones nocturnas.
+El sistema está listo para pruebas de campo y puede ser mejorado incrementalmente agregando más datos (especialmente imágenes de ovejas, gallinas y cuyes para discriminación multiclase) y adaptándolo a condiciones nocturnas.
 
 ---
 
@@ -373,4 +383,4 @@ El sistema está listo para pruebas de campo y puede ser mejorado incrementalmen
 
 ---
 
-*"Protegiendo al ganado con inteligencia artificial — una herramienta al alcance de todo productor"* 🐑🛡️🦊
+*"Protegiendo a los animales de granja con inteligencia artificial — una herramienta al alcance de todo productor"* 🐑🐔🐹🛡️🦊
