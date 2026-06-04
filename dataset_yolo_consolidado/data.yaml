@@ -1,0 +1,7 @@
+train: d:\SOLEDAD\dataset_yolo_consolidado\train\images
+val: d:\SOLEDAD\dataset_yolo_consolidado\valid\images
+test: d:\SOLEDAD\dataset_yolo_consolidado\test\images
+
+nc: 1
+names:
+  0: zorro

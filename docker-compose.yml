@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    container_name: pastor_guardian_web
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./runs:/app/runs
+      - ./dataset_yolo_consolidado:/app/dataset_yolo_consolidado
+    restart: always

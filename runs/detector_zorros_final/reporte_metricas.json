@@ -1,0 +1,8 @@
+{
+    "modelo": "d:\\SOLEDAD\\runs\\detector_zorros_final\\weights\\best.pt",
+    "mAP50": 0.986,
+    "mAP50_95": 0.7283,
+    "precision": 0.964,
+    "recall": 0.9706,
+    "f1_score": 0.9673
+}

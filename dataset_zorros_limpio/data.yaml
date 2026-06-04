@@ -1,0 +1,13 @@
+# Configuración del dataset de zorros
+# Generado automáticamente por el pipeline
+
+train: d:\SOLEDAD\dataset_zorros_limpio\train\images
+val:   d:\SOLEDAD\dataset_zorros_limpio\valid\images
+test:  d:\SOLEDAD\dataset_zorros_limpio\test\images
+
+# Número de clases
+nc: 1
+
+# Nombre de cada clase
+names:
+  0: zorro

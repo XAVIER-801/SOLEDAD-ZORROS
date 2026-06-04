@@ -1,0 +1,13 @@
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 1
+names: ['zorro']
+
+roboflow:
+  workspace: jose-garcia-w0gly
+  project: zorros
+  version: 2
+  license: Public Domain
+  url: https://universe.roboflow.com/jose-garcia-w0gly/zorros/dataset/2
