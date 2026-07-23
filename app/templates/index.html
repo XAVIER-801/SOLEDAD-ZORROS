@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pastor Guardián - Monitoreo en Tiempo Real</title>
+    <!-- Modern Typography from Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: #161e2f;
+            --accent-green: #10b981;
+            --accent-red: #ef4444;
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --border-color: #24324f;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e293b, var(--bg-color));
+            border-bottom: 1px solid var(--border-color);
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(to right, #60a5fa, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .status-badge {
+            background-color: rgba(16, 185, 129, 0.1);
+            border: 1px solid var(--accent-green);
+            color: var(--accent-green);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .status-badge.alert-active {
+            background-color: rgba(239, 68, 68, 0.1);
+            border-color: var(--accent-red);
+            color: var(--accent-red);
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        main {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 3fr 1fr;
+            gap: 2rem;
+            padding: 2rem;
+            max-width: 1600px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .feed-container {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+        }
+
+        .feed-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+            background-color: #000;
+            aspect-ratio: 4/3;
+            border: 1px solid var(--border-color);
+        }
+
+        .video-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .card h2 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+            color: var(--text-muted);
+        }
+
+        .metric-value {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-desc {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .alert-box {
+            background: linear-gradient(135deg, #1e1b4b, #311042);
+            border: 1px solid var(--accent-red);
+            border-radius: 16px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 1rem;
+            display: none;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .alert-box h3 {
+            color: var(--accent-red);
+            font-size: 1.5rem;
+            font-weight: 800;
+        }
+
+        .alert-box button {
+            background-color: var(--accent-red);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .alert-box button:hover {
+            background-color: #dc2626;
+        }
+
+        .controls-card {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .switch-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 26px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #374151;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--accent-green);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(24px);
+        }
+
+        .history-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            max-height: 250px;
+            overflow-y: auto;
+        }
+
+        .history-item {
+            background-color: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .history-time {
+            color: var(--text-muted);
+        }
+
+        .history-label {
+            color: var(--accent-red);
+            font-weight: 600;
+        }
+
+        @media (max-width: 1024px) {
+            main {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>🛡️ Pastor Guardián</h1>
+        <div id="system-status" class="status-badge">
+            <span class="indicator">●</span>
+            <span id="status-text">Vigilando</span>
+        </div>
+    </header>
+
+    <main>
+        <!-- Feed de Video -->
+        <section class="feed-container">
+            <div class="feed-header">
+                <h2>Cámara del Panel en Vivo</h2>
+                <span id="live-dot" style="color: var(--accent-green); font-size: 0.9rem; font-weight: 600;">● EN VIVO</span>
+            </div>
+            <div class="video-wrapper">
+                <img src="/video_feed" alt="Video Feed">
+            </div>
+        </section>
+
+        <!-- Barra Lateral de Datos y Controles -->
+        <section class="sidebar">
+            <!-- Tarjeta de Alerta Rápida -->
+            <div id="alarm-card" class="alert-box">
+                <h3>⚠️ AMENAZA DETECTADA</h3>
+                <p>Se ha detectado un Zorro acechando el área de las ovejas.</p>
+                <button onclick="muteAlert()">Silenciar Alarma</button>
+            </div>
+
+            <!-- Controles del Sistema -->
+            <div class="card controls-card">
+                <h2>Controles de Alerta</h2>
+                <div class="switch-container">
+                    <span>Sonido de Alarma</span>
+                    <label class="switch">
+                        <input type="checkbox" id="sound-toggle" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="switch-container">
+                    <span>Alertas por Voz</span>
+                    <label class="switch">
+                        <input type="checkbox" id="voice-toggle" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Métrica -->
+            <div class="card">
+                <h2>Total de Avistamientos Hoy</h2>
+                <div id="total-alerts" class="metric-value">0</div>
+                <div class="metric-desc">Casos de zorros detectados en el perímetro.</div>
+            </div>
+
+            <!-- Historial de Detección -->
+            <div class="card">
+                <h2>Registro Reciente</h2>
+                <div id="history-log" class="history-list">
+                    <!-- Dinámico -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        let isAlerting = false;
+        let audioContext = null;
+        let lastAlertTime = 0;
+        let alertCount = 0;
+
+        // Sound Synthesis using Web Audio API
+        function playSiren() {
+            if (!document.getElementById("sound-toggle").checked) return;
+            
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
+
+            const osc = audioContext.createOscillator();
+            const gain = audioContext.createGain();
+            
+            osc.type = 'sawtooth';
+            osc.frequency.setValueAtTime(440, audioContext.currentTime); // Pitch
+            osc.frequency.linearRampToValueAtTime(880, audioContext.currentTime + 0.5);
+            osc.frequency.linearRampToValueAtTime(440, audioContext.currentTime + 1.0);
+            
+            gain.gain.setValueAtTime(0.3, audioContext.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 1.0);
+
+            osc.connect(gain);
+            gain.connect(audioContext.destination);
+
+            osc.start();
+            osc.stop(audioContext.currentTime + 1.0);
+        }
+
+        function speakAlert() {
+            if (!document.getElementById("voice-toggle").checked) return;
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance("Alerta. Zorro detectado en el perímetro de pastoreo.");
+                utterance.lang = "es-ES";
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        // Connect WebSocket for real-time messages
+        const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+        const ws = new WebSocket(`${protocol}//${window.location.host}/ws`);
+
+        ws.onmessage = function(event) {
+            const data = JSON.parse(event.data);
+            const statusBadge = document.getElementById("system-status");
+            const statusText = document.getElementById("status-text");
+            const alarmCard = document.getElementById("alarm-card");
+
+            if (data.alert) {
+                statusBadge.classList.add("alert-active");
+                statusText.innerText = "¡ALERTA DE AMENAZA!";
+                alarmCard.style.display = "flex";
+                
+                const now = Date.now();
+                // Limit sound alerts to once every 5 seconds to avoid overlapping noises
+                if (now - lastAlertTime > 5000) {
+                    playSiren();
+                    speakAlert();
+                    lastAlertTime = now;
+                    
+                    // Update stats
+                    alertCount++;
+                    document.getElementById("total-alerts").innerText = alertCount;
+
+                    // Add to log list
+                    const log = document.getElementById("history-log");
+                    const item = document.createElement("div");
+                    item.className = "history-item";
+                    
+                    const timeStr = new Date().toLocaleTimeString();
+                    item.innerHTML = `
+                        <span class="history-label">Zorro Detectado</span>
+                        <span class="history-time">${timeStr}</span>
+                    `;
+                    log.insertBefore(item, log.firstChild);
+                }
+            } else {
+                if (!isAlerting) {
+                    statusBadge.classList.remove("alert-active");
+                    statusText.innerText = "Vigilando";
+                    alarmCard.style.display = "none";
+                }
+            }
+        };
+
+        function muteAlert() {
+            const alarmCard = document.getElementById("alarm-card");
+            alarmCard.style.display = "none";
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+            }
+        }
+    </script>
+</body>
+</html>
