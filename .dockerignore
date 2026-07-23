@@ -1,0 +1,40 @@
+# Modelos YOLO grandes — disponibles via volume mount en runtime
+yolo11m.pt
+yolo11n.pt
+yolo26n.pt
+
+# Base de datos local (se usa volumen o se regenera)
+detections.db
+
+# Dataset y entrenamiento
+dataset_unificado/
+runs/
+output/
+entrenar_modelo.ipynb
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# Archivos de presentación/documentación
+*.tex
+*.log
+*.pdf
+presentacion.*
+estructura*.txt
+estructurafinal.*
+
+# Git
+.git/
+.gitignore
+
+# IDE / Editor
+.vscode/
+.claude/
+*.ipynb
+
+# Agentes
+.agents/

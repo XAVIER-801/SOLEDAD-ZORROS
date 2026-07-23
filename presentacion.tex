@@ -1,0 +1,570 @@
+\documentclass[10pt,aspectratio=169]{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tikz}
+\usepackage{colortbl}
+\usepackage{hyperref}
+
+% Definición de Colores Institucionales UNAP
+\definecolor{unapblue}{HTML}{003366}
+\definecolor{unapgold}{HTML}{D4AF37}
+\definecolor{darkgray}{HTML}{222222}
+\definecolor{lightgray}{HTML}{F8F9FA}
+\definecolor{successgreen}{HTML}{2E7D32}
+
+% Configuración del Tema Beamer
+\usetheme{Madrid}
+\usecolortheme{default}
+\setbeamercolor{palette primary}{bg=unapblue,fg=white}
+\setbeamercolor{palette secondary}{bg=unapblue!85,fg=white}
+\setbeamercolor{palette tertiary}{bg=unapblue!70,fg=white}
+\setbeamercolor{titlelike}{parent=palette primary}
+\setbeamercolor{structure}{fg=unapblue}
+\setbeamercolor{item}{fg=unapblue}
+\setbeamercolor{block title}{bg=unapblue,fg=white}
+\setbeamercolor{block body}{bg=lightgray,fg=darkgray}
+
+% Eliminar botones de navegación molestos
+\setbeamertemplate{navigation symbols}{}
+
+% Pie de página personalizado
+\setbeamertemplate{footline}{
+  \leavevmode%
+  \hbox{%
+    \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{palette primary}%
+      Escuela Profesional de Estadística e Informática
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{palette secondary}%
+      Pastor Guardián - Alertas de Zorros
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,right]{palette tertiary}%
+      UNAP Puno ~|~ \insertframenumber{} / \inserttotalframenumber\hspace*{2ex}
+    \end{beamercolorbox}%
+  }%
+  \vskip0pt%
+}
+
+% Título y Metadatos de la Portada
+\title[Pastor Guardián]{\textbf{Pastor Guardián: Sistema Inteligente de Alertas de Zorros en Tiempo Real mediante Redes Neuronales}}
+\subtitle{Informe de Implementación de Aplicación con Inteligencia Artificial}
+\author[Graduandos]{Bach. [Nombre del Graduando 1] \\ Bach. [Nombre del Graduando 2]}
+\institute[UNAP]{
+  Universidad Nacional del Altiplano\\
+  Facultad de Ingeniería Estadística e Informática\\
+  Escuela Profesional de Ingeniería Estadística e Informática
+}
+\date[2026]{Puno, 2026\\ \vspace{0.2cm}\small Asesor: [Nombre del Asesor]}
+
+\begin{document}
+
+% ---------------------------------------------------------
+% Diapositiva 1: Carátula e Identidad Institucional
+% ---------------------------------------------------------
+\begin{frame}[plain]
+  \begin{tikzpicture}[remember picture,overlay]
+    % Barra superior azul
+    \fill[unapblue] (current page.north west) rectangle ([yshift=-2.2cm]current page.north east);
+    % Barra delgada dorada
+    \fill[unapgold] ([yshift=-2.2cm]current page.north west) rectangle ([yshift=-2.35cm]current page.north east);
+    
+    % Texto en barra superior
+    \node[anchor=west, text=white, font=\large\bfseries] at ([yshift=-0.7cm, xshift=0.8cm]current page.north west) {UNIVERSIDAD NACIONAL DEL ALTIPLANO};
+    \node[anchor=west, text=unapgold, font=\small\bfseries] at ([yshift=-1.4cm, xshift=0.8cm]current page.north west) {Escuela Profesional de Estadística e Informática};
+  \end{tikzpicture}
+  
+  \vspace{1.8cm}
+  \begin{center}
+    {\large \bfseries \color{unapblue} PASTOR GUARDIÁN: SISTEMA INTELIGENTE DE ALERTAS DE ZORROS EN TIEMPO REAL MEDIANTE REDES NEURONALES PARA PROTECCIÓN DE REBAÑOS EN LA UNAP}
+    
+    \vspace{0.4cm}
+    \small
+    \textbf{Presentado por:}\\
+    [Nombres y Apellidos de los Graduandos/Autores]\\
+    \vspace{0.2cm}
+    \textbf{Asesor:} [Nombre del Asesor]
+    
+    \vspace{0.6cm}
+    \footnotesize
+    \color{gray} Puno, 2026
+  \end{center}
+\end{frame}
+
+% ---------------------------------------------------------
+% Diapositiva 2: Introducción y Justificación
+% ---------------------------------------------------------
+\begin{frame}{Introducción y Justificación}
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \begin{block}{Contexto Real}
+        \small
+        La depredación por zorros andinos (\textit{Lycalopex culpaeus}) causa pérdidas económicas severas a los criadores de ganado menor (ovejas, gallinas, cuyes, conejos) en las zonas altoandinas y en los centros experimentales de la UNAP.
+      \end{block}
+      \vspace{0.2cm}
+      \begin{block}{Justificación Tecnológica}
+        \small
+        Frente a los métodos tradicionales reactivos (perros de pastoreo o cercos pasivos), la \textbf{Inteligencia Artificial} mediante visión computacional permite una vigilancia autónoma de 24 horas y emisión instantánea de alertas.
+      \end{block}
+    \end{column}
+    
+    \begin{column}{0.48\textwidth}
+      \begin{block}{Justificación Estadística}
+        \small
+        El análisis masivo y estructurado de datos de imágenes multiespectrales (visión normal, nocturna e infrarroja) permite modelar patrones complejos de movimiento y características morfológicas del depredador.
+      \end{block}
+      \vspace{0.3cm}
+      \centering
+      \begin{tikzpicture}
+        \draw[fill=unapblue!10, draw=unapblue, thick, rounded corners] (0,0) rectangle (4.5,1.5);
+        \node[align=center] at (2.25,0.75) {\scriptsize \textbf{Enfoque Estadístico-Tecnológico} \\ \tiny Clasificación y localización \\ \tiny automatizada en milisegundos.};
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ---------------------------------------------------------
+% Diapositiva 3: Planteamiento del Problema
+% ---------------------------------------------------------
+\begin{frame}{Planteamiento del Problema}
+  \begin{block}{Problema Central}
+    \small
+    Falta de un mecanismo preventivo inteligente de detección temprana que alerte de forma inmediata la intrusión de zorros en los galpones y corrales de animales domésticos, lo que resulta en altas tasas de mortalidad ganadera.
+  \end{block}
+  
+  \begin{columns}[T]
+    \begin{column}{0.58\textwidth}
+      \begin{block}{Formulación del Problema}
+        \small
+        ¿En qué medida el desarrollo de un sistema inteligente de detección en tiempo real basado en redes neuronales convolucionales optimizadas contribuye a la reducción de ataques de zorros en las unidades pecuarias de la UNAP?
+      \end{block}
+    \end{column}
+    
+    \begin{column}{0.38\textwidth}
+      \begin{block}{Alcances y Limitaciones}
+        \scriptsize
+        \begin{itemize}
+          \item \textbf{Alcance:} Visión normal, nocturna e infrarroja.
+          \item \textbf{Monitoreo:} Tiempo real vía WebSockets.
+          \item \textbf{Limitaciones:} Rango de visión físico de las cámaras y la oclusión parcial de los animales en el campo de visión.
+        \end{itemize}
+      \end{block}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ---------------------------------------------------------
+% Diapositiva 4: Objetivos del Proyecto
+% ---------------------------------------------------------
+\begin{frame}{Objetivos del Proyecto}
+  \begin{block}{Objetivo General}
+    \normalsize \bfseries \color{unapblue}
+    Desarrollar e implementar la aplicación inteligente "Pastor Guardián" basada en redes neuronales YOLOv11 para la detección oportuna de zorros y emisión automática de alertas en tiempo real.
+  \end{block}
+  
+  \vspace{0.2cm}
+  \textbf{Objetivos Específicos:}
+  \begin{enumerate}
+    \small
+    \item \textbf{Ingeniería de Datos:} Consolidar y estructurar un dataset multiclase que integre imágenes de fauna menor y depredadores bajo condiciones de visión diurna, nocturna e infrarroja.
+    \item \textbf{Modelamiento:} Entrenar y optimizar la red neuronal YOLOv11 mediante técnicas avanzadas de aumentación de datos para garantizar una alta precisión.
+    \item \textbf{Arquitectura del Sistema:} Diseñar un backend robusto basado en FastAPI y WebSockets que permita transmitir tramas de video y emitir alarmas audibles.
+    \item \textbf{Validación:} Validar el sistema integral mediante pruebas de latencia de inferencia y métricas estadísticas de matriz de confusión (Precisión, Recall y mAP).
+  \end{enumerate}
+\end{frame}
+
+% ---------------------------------------------------------
+% Diapositiva 5: Marco Teórico y Estado del Arte
+% ---------------------------------------------------------
+\begin{frame}{Marco Teórico y Estado del Arte}
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \begin{block}{Fundamentos de Inteligencia Artificial}
+        \small
+        La visión por computadora y el \textbf{Deep Learning} permiten automatizar la extracción de características visuales complejas mediante capas convolucionales profundas, superando los algoritmos de detección tradicionales.
+      \end{block}
+      \begin{block}{Sustento Algorítmico (YOLOv11)}
+        \small
+        La arquitectura \textbf{YOLO (You Only Look Once) versión 11} destaca por:
+        \begin{itemize}
+          \scriptsize
+          \item Enfoque \textit{anchor-free} para localización eficiente.
+          \item Bloques \textit{C3k2} y optimizadores optimizados (AdamW).
+          \item Excelente balance entre precisión y baja latencia de cómputo en hardware edge.
+        \end{itemize}
+      \end{block}
+    \end{column}
+    
+    \begin{column}{0.48\textwidth}
+      \begin{block}{Antecedentes y Estado del Arte}
+        \small
+        Investigaciones previas utilizan sensores infrarrojos pasivos (PIR) que generan un gran número de falsas alarmas (causadas por el viento u otros animales inofensivos), o dependen de procesamiento en la nube lento.
+        
+        \vspace{0.2cm}
+        \textbf{Valor Agregado:} Monitoreo local en tiempo real con capacidad multiespectral capaz de discernir de manera exacta la silueta del zorro de entre otras especies de ganado.
+      \end{block}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ---------------------------------------------------------
+% Diapositiva 6: Metodología de Desarrollo
+% ---------------------------------------------------------
+\begin{frame}{Metodología de Desarrollo}
+  \begin{block}{Metodología de Aplicación (SCRUM)}
+    \small
+    Se implementó un marco de trabajo ágil distribuido en 4 Sprints clave:
+    1) Análisis y adquisición de imágenes, 2) Diseño y entrenamiento de la red convolucional, 3) Programación del backend de streaming y alertas, y 4) Pruebas de campo e integración.
+  \end{block}
+  
+  \begin{block}{Ciclo de Vida de los Datos e Inteligencia Artificial}
+    \centering
+    \begin{tikzpicture}[node distance=2.2cm, auto, >=stealth]
+      \tikzstyle{block} = [rectangle, draw, fill=unapblue!10, text width=2.1cm, text centered, rounded corners, minimum height=1.1cm, font=\tiny\bfseries]
+      
+      \node [block] (rec) {1. Recolección\\(Imágenes de 5 especies en 3 espectros)};
+      \node [block, right of=rec, node distance=2.6cm] (prep) {2. Preprocesamiento\\(Polígonos a BBoxes con remapear\_labels.py)};
+      \node [block, right of=prep, node distance=2.6cm] (mod) {3. Modelado e IA\\(Entrenamiento YOLO11n - 100 épocas)};
+      \node [block, right of=mod, node distance=2.6cm] (eval) {4. Evaluación\\(Métricas y Matriz de Confusión en Test)};
+      \node [block, right of=eval, node distance=2.6cm] (desp) {5. Despliegue\\(FastAPI, SQLite y Docker Container)};
+      
+      \draw[->, thick, unapblue] (rec) -- (prep);
+      \draw[->, thick, unapblue] (prep) -- (mod);
+      \draw[->, thick, unapblue] (mod) -- (eval);
+      \draw[->, thick, unapblue] (eval) -- (desp);
+    \end{tikzpicture}
+  \end{block}
+\end{frame}
+
+% ---------------------------------------------------------
+% Diapositiva 7: Ingeniería de Datos y Análisis Exploratorio (EDA)
+% ---------------------------------------------------------
+\begin{frame}{Ingeniería de Datos y Análisis Exploratorio (EDA)}
+  \begin{columns}[T]
+    \begin{column}{0.5\textwidth}
+      \begin{block}{Base de Datos Unificada}
+        \small
+        Se recopilaron y remapearon datos de fuentes heterogéneas para generar un dataset balanceado y representativo:
+        \begin{itemize}
+          \scriptsize
+          \item \textbf{Total de imágenes:} 25,563
+          \item \textbf{Train Split:} 19,992 imágenes (80\%)
+          \item \textbf{Validation Split:} 3,987 imágenes (15\%)
+          \item \textbf{Test Split:} 1,584 imágenes (5\%)
+        \end{itemize}
+      \end{block}
+      \begin{block}{Preprocesamiento Estadístico}
+        \small
+        \begin{itemize}
+          \scriptsize
+          \item Automatización del remapeo de clases mediante \texttt{remapear\_labels.py} para unificar las categorías de detección.
+          \item Conversión matemática de polígonos de segmentación a coordenadas relativas YOLO $[x_c, y_c, w, h]$.
+        \end{itemize}
+      \end{block}
+    \end{column}
+    
+    \begin{column}{0.46\textwidth}
+      \begin{block}{Distribución de Clases (5 Clases)}
+        \centering
+        \small
+        \begin{tabular}{llr}
+          \toprule
+          \textbf{ID} & \textbf{Clase} & \textbf{Espectro Visual} \\
+          \midrule
+          0 & \textbf{zorro} (Alerta) & Normal / Infrarrojo / Nocturno \\
+          1 & oveja & Normal / Infrarrojo / Nocturno \\
+          2 & gallina & Normal / Infrarrojo / Nocturno \\
+          3 & cuy & Normal / Infrarrojo / Nocturno \\
+          4 & conejo & Normal / Infrarrojo / Nocturno \\
+          \bottomrule
+        \end{tabular}
+      \end{block}
+      \vspace{0.1cm}
+      \centering \scriptsize
+      \textit{El balance y la diversidad de iluminación evitan el sesgo y overfitting.}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ---------------------------------------------------------
+% Diapositiva 8: Arquitectura y Diseño del Aplicativo
+% ---------------------------------------------------------
+\begin{frame}{Arquitectura y Diseño del Aplicativo}
+  \centering
+  \begin{tikzpicture}[node distance=1.5cm, >=stealth, thick]
+    \tikzstyle{layer} = [rectangle, draw=unapblue, fill=unapblue!5, text width=3.8cm, text centered, rounded corners, minimum height=0.8cm, font=\scriptsize\bfseries]
+    \tikzstyle{component} = [rectangle, draw=unapgold, fill=unapgold!10, text width=3.2cm, text centered, minimum height=0.6cm, font=\tiny\bfseries]
+
+    % Bloques Principales
+    \node [layer] (fe) {Capa de Presentación (Frontend)\\ \tiny HTML5, CSS3, JavaScript};
+    \node [layer, below of=fe, node distance=1.8cm] (be) {Capa de Servicio (Backend)\\ \tiny FastAPI (Python Asyncio)};
+    \node [layer, below of=be, node distance=1.8cm] (model) {Capa de Inteligencia Artificial\\ \tiny YOLOv11 (PyTorch)};
+    \node [layer, right of=be, node distance=5.5cm] (db) {Persistencia de Datos\\ \tiny SQLite (detections.db)};
+
+    % Conexiones e Integración
+    \draw[<->, unapblue] (fe) -- node[left, font=\tiny] {WebSockets (Alarma/Detecciones)} (be);
+    \draw[<->, unapblue] (be) -- node[left, font=\tiny] {Inferencia (Frame/BBox)} (model);
+    \draw[->, unapblue] (be) -- node[above, font=\tiny] {Registro de Historial} (db);
+
+    % Explicación
+    \node[anchor=west, font=\tiny, text=darkgray, align=left] at (4.5, -0.6) {
+      \textbf{Flujo de Integración de IA:}\\
+      1. El cliente envía stream o la cámara adquiere frame.\\
+      2. FastAPI procesa de forma asíncrona.\\
+      3. YOLO efectúa la detección en milisegundos.\\
+      4. Si se supera el umbral de alerta (zorro $\ge$ 0.70):\\
+      ~~ - Se activa alarma sonora en Frontend.\\
+      ~~ - Se guarda imagen Base64 y BBox en SQLite.
+    };
+  \end{tikzpicture}
+\end{frame}
+
+% ---------------------------------------------------------
+% Diapositiva 9: Entrenamiento y Modelamiento de la IA
+% ---------------------------------------------------------
+\begin{frame}{Entrenamiento y Modelamiento de la IA}
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \begin{block}{Estrategia de Validación}
+        \small
+        \begin{itemize}
+          \item \textbf{Partición de datos:} Esquema estándar de retención (Holdout) 80\% entrenamiento, 15\% validación y 5\% prueba independiente.
+          \item Evaluado sobre el conjunto de test para simular el rendimiento en escenarios productivos reales.
+        \end{itemize}
+      \end{block}
+      \begin{block}{Parámetros de Optimización}
+        \scriptsize
+        \begin{tabular}{ll}
+          \toprule
+          \textbf{Hiperparámetro} & \textbf{Valor Seleccionado} \\
+          \midrule
+          Modelo Base & YOLO11n (2.58M parámetros) \\
+          Épocas & 100 \\
+          Tamaño de Lote (Batch) & 8 \\
+          Dimensión de Imagen & 640 x 640 píxeles \\
+          Optimizador & AdamW \\
+          Aumento de Datos & Mosaic (10 últimas épocas desactivado) \\
+          Paciencia de parada & 25 épocas \\
+          \bottomrule
+        \end{tabular}
+      \end{block}
+    \end{column}
+    
+    \begin{column}{0.48\textwidth}
+      \begin{block}{Control de Overfitting}
+        \small
+        \begin{itemize}
+          \item Uso de \textbf{Paciencia (Early Stopping)} fijada en 25 épocas para interrumpir el entrenamiento al degradarse la pérdida de validación.
+          \item Programación de tasa de aprendizaje por recocido de coseno (\textit{Cosine Annealing}) para una convergencia suave.
+          \item Regularización avanzada mediante regularización L2 y aumento de datos sintético durante la etapa de entrenamiento.
+        \end{itemize}
+      \end{block}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ---------------------------------------------------------
+% Diapositiva 10: Validación y Métricas Estadísticas de la IA
+% ---------------------------------------------------------
+\begin{frame}{Validación y Métricas Estadísticas de la IA}
+  \begin{table}
+    \centering
+    \caption{Rendimiento en el conjunto de prueba (Test Split - 1,584 imágenes)}
+    \scriptsize
+    \begin{tabular}{lcccccc}
+      \toprule
+      \textbf{Clase} & \textbf{Imágenes} & \textbf{Instancias} & \textbf{Precisión (P)} & \textbf{Recall (R)} & \textbf{mAP50} & \textbf{mAP50-95} \\
+      \midrule
+      \rowcolor{unapblue!10}
+      \textbf{zorro} (Alerta) & 96 & 102 & \textbf{0.946} & \textbf{0.882} & \textbf{0.966} & \textbf{0.679} \\
+      cuy & 429 & 1314 & 0.915 & 0.847 & 0.929 & 0.688 \\
+      conejo & 57 & 105 & 0.868 & 0.743 & 0.867 & 0.634 \\
+      oveja & 255 & 750 & 0.807 & 0.697 & 0.746 & 0.493 \\
+      gallina & 90 & 267 & 0.715 & 0.301 & 0.363 & 0.245 \\
+      \midrule
+      \textbf{Promedio Global} & \textbf{1584} & \textbf{2538} & \textbf{0.850} & \textbf{0.694} & \textbf{0.774} & \textbf{0.548} \\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+
+  \begin{block}{Análisis Crítico de Resultados}
+    \scriptsize
+    \begin{itemize}
+      \item La clase \textbf{zorro} reporta el desempeño más óptimo con un \textbf{mAP50 de 96.6\%}, reduciendo drásticamente la probabilidad de ataques no detectados (Falsos Negativos).
+      \item La clase \textbf{gallina} presenta menor precisión (mAP50 36.3\%) debido al tamaño relativo de los animales, la alta densidad en corrales y problemas de oclusión mutua.
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+% ---------------------------------------------------------
+% Diapositiva 11: Demostración del Aplicativo (Módulos Críticos)
+% ---------------------------------------------------------
+\begin{frame}{Demostración del Aplicativo (Módulos Críticos)}
+  \begin{columns}[T]
+    \begin{column}{0.5\textwidth}
+      \begin{block}{Módulos Clave de la Interfaz}
+        \small
+        \begin{itemize}
+          \item \textbf{Visualización en Tiempo Real:} Streaming de video por WebSocket con delimitación gráfica (BBox) coloreada.
+          \item \textbf{Módulo de Alerta Acústica:} Reproducción automática de sirena disuasoria en el navegador web al clasificar un zorro con confianza $\ge 0.70$.
+          \item \textbf{Configuración de Umbrales:} Ajuste dinámico de los umbrales de confianza (Conf) e intersección sobre unión (IoU) desde el panel administrativo.
+        \end{itemize}
+      \end{block}
+    \end{column}
+    
+    \begin{column}{0.46\textwidth}
+      \begin{block}{Registro de Historial (Base de Datos)}
+        \small
+        Cada alerta guarda en la base de datos local SQLite:
+        \begin{itemize}
+          \scriptsize
+          \item ID único (UUID v4) y Fecha/Hora exacta.
+          \item Nivel de confianza obtenido del modelo.
+          \item Recuadro contenedor de detección (BBox).
+          \item Imagen capturada en Base64 para auditoría remota.
+        \end{itemize}
+      \end{block}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ---------------------------------------------------------
+% Diapositiva 12: Pruebas del Sistema (QA)
+% ---------------------------------------------------------
+\begin{frame}{Pruebas del Sistema (QA)}
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \begin{block}{Pruebas Unitarias y de Integración}
+        \small
+        \begin{itemize}
+          \item Verificación del flujo de datos de simulación e imágenes reales.
+          \item Validación de llamadas concurrentes de WebSockets desde múltiples clientes de forma simultánea.
+        \end{itemize}
+      \end{block}
+      \begin{block}{Pruebas de Aceptación}
+        \small
+        Se validó la estabilidad del portal web en dispositivos móviles y de escritorio, verificando que la interfaz responde correctamente a la reconfiguración y la visualización de registros históricos.
+      \end{block}
+    \end{column}
+    
+    \begin{column}{0.48\textwidth}
+      \begin{block}{Pruebas de Rendimiento de Inferencia}
+        \small
+        Evaluadas en hardware de prueba (RTX 4060 Laptop GPU, 8GB VRAM):
+        \begin{itemize}
+          \scriptsize
+          \item \textbf{Preprocesamiento:} 1.3 ms por frame.
+          \item \textbf{Inferencia YOLOv11:} 2.4 ms por frame.
+          \item \textbf{Postprocesamiento:} 0.7 ms por frame.
+          \item \textbf{Tiempo de respuesta total:} ~4.4 ms por frame (equivalente a más de \textbf{220 FPS}).
+        \end{itemize}
+        
+        \vspace{0.1cm}
+        \centering \scriptsize \color{successgreen}
+        \textbf{Apto para procesamiento en tiempo real de alta velocidad.}
+      \end{block}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ---------------------------------------------------------
+% Diapositiva 13: Resultados y Discusión de Impacto
+% ---------------------------------------------------------
+\begin{frame}{Resultados y Discusión de Impacto}
+  \begin{columns}[T]
+    \begin{column}{0.5\textwidth}
+      \begin{block}{Análisis Comparativo de Escenarios}
+        \centering
+        \scriptsize
+        \begin{tabular}{p{2.2cm}cc}
+          \toprule
+          \textbf{Métrica} & \textbf{Monitoreo Manual} & \textbf{Pastor Guardián} \\
+          \midrule
+          Disponibilidad & Limitada (humana) & Continua (24/7) \\
+          Tiempo de Reacción & Lento ($>5$ min) & Instantáneo ($<0.5$ s) \\
+          Detección Nocturna & Muy deficiente & Eficiente (Infrarrojo) \\
+          Costo Operativo & Alto (personal) & Bajo (automatizado) \\
+          Registro Histórico & No posee & Automático (SQLite) \\
+          \bottomrule
+        \end{tabular}
+      \end{block}
+    \end{column}
+    
+    \begin{column}{0.46\textwidth}
+      \begin{block}{Retorno o Beneficio Obtenido}
+        \small
+        \begin{itemize}
+          \item \textbf{Reducción del Tiempo de Alerta:} La sirena acústica se activa en menos de medio segundo de ingresada la amenaza.
+          \item \textbf{Protección Proactiva:} El ruido disuasivo ahuyenta al animal silvestre antes del ataque.
+          \item \textbf{Gestión de Datos:} El historial permite mapear las horas de mayor actividad del zorro para planificación pecuaria.
+        \end{itemize}
+      \end{block}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ---------------------------------------------------------
+% Diapositiva 14: Conclusiones
+% ---------------------------------------------------------
+\begin{frame}{Conclusiones}
+  \begin{block}{Conclusiones en Relación a los Objetivos}
+    \small
+    \begin{itemize}
+      \item \textbf{Conclusión 1:} Se construyó y unificó exitosamente un dataset de 25,563 imágenes con etiquetas convertidas a bounding boxes, cubriendo visión térmica, nocturna y normal, eliminando sesgos en las clasificaciones.
+      \item \textbf{Conclusión 2:} El modelo YOLOv11 demostró un alto nivel de eficiencia en test con una precisión media global (mAP50) de 77.4\%, y un excepcional rendimiento específico en zorros de 96.6\%, reduciendo al mínimo la tasa de falsos negativos.
+      \item \textbf{Conclusión 3:} Se implementó una arquitectura basada en FastAPI, SQLite y comunicación persistente WebSocket que gestiona de manera asíncrona la transmisión de tramas de video y el disparo de alarmas remotas.
+      \item \textbf{Conclusión 4:} Las pruebas de QA determinaron una latencia de inferencia de 2.4 ms/frame en GPU, lo que califica al sistema como apto para su integración en dispositivos empotrados de videovigilancia rural.
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+% ---------------------------------------------------------
+% Diapositiva 15: Recomendaciones y Trabajo Futuro
+% ---------------------------------------------------------
+\begin{frame}{Recomendaciones y Trabajo Futuro}
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \begin{block}{Sostenibilidad del Proyecto}
+        \small
+        Implementar el software en dispositivos de bajo consumo (Raspberry Pi 5 o NVIDIA Jetson Nano) alimentados por paneles solares para garantizar autonomía eléctrica en zonas alejadas de la red de energía.
+      \end{block}
+      \begin{block}{Mitigación de Desviación de Datos}
+        \small
+        Establecer un flujo de reentrenamiento periódico. Las detecciones de zorros con confianza media ($0.40 - 0.60$) se deben almacenar para reentrenar semestralmente el modelo y corregir el \textit{Data Drift}.
+      \end{block}
+    \end{column}
+    
+    \begin{column}{0.48\textwidth}
+      \begin{block}{Escalabilidad y Redes de Cámaras}
+        \small
+        Migrar la arquitectura actual a un modelo cliente-servidor centralizado donde múltiples cámaras envíen flujos de video paralelos a un único servidor web, unificando la monitorización de todos los establos de la UNAP.
+      \end{block}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ---------------------------------------------------------
+% Diapositiva 16: Referencias Bibliográficas y Cierre
+% ---------------------------------------------------------
+\begin{frame}{Referencias Bibliográficas y Cierre}
+  \begin{block}{Sustento Científico}
+    \scriptsize
+    \begin{itemize}
+      \item Jocher, G., Chaurasia, A., \& Qiu, J. (2024). \textit{Ultralytics YOLO11}. \url{https://github.com/ultralytics/ultralytics}.
+      \item Redmon, J., Divvala, S., Girshick, R., \& Farhadi, A. (2016). You Only Look Once: Unified, Real-Time Object Detection. \textit{IEEE CVPR}.
+      \item FastAPI Documentation. (2025). \textit{Asynchronous Web Framework for Python}. \url{https://fastapi.tiangolo.com/}.
+      \item Bishop, C. M. (2006). \textit{Pattern Recognition and Machine Learning}. Springer.
+    \end{itemize}
+  \end{block}
+  
+  \vspace{0.4cm}
+  \centering
+  {\large \bfseries \color{unapblue} ¡Muchas Gracias por su Atención!}
+  
+  \vspace{0.2cm}
+  \small \color{darkgray}
+  Apertura de la ronda de preguntas y debate con el Jurado Evaluador.
+\end{frame}
+
+\end{document}

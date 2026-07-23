@@ -1,0 +1,89 @@
+ESTRUCTURA DE PRESENTACIÓN FINAL
+Informe de Implementación de aplicación con Inteligencia Artificial Escuela Profesional de Estadística e Informática - UNAP
+El presente documento proporciona la estructura metodológica y el contenido detallado para la elaboración de la presentación final del proyecto de implementación de aplicacion usando Inteligencia Artificial (IA). Diseñado específicamente bajo los estándares académicos y profesionales de la Escuela Profesional de Estadística e Informática de la Universidad Nacional del Altiplano (UNAP), este esquema equilibra con el mismo rigor científico los aspectos de ingeniería de aplicacion y el análisis estadístico subyacente de los modelos predictivos o cognitivos empleados.
+1. Consideraciones Generales para la Defensa del Informe
+La sustentación final es un acto académico crítico. El equipo o autor debe demostrar no solo el funcionamiento del aplicacion, sino también validar estadísticamente por qué la solución basada en IA es óptima y precisa para el problema planteado.
+· Tiempo y Extensión: Entre 15 y 20 diapositivas máximo, optimizadas para una exposición de 20 a 25 minutos.
+· Diseño Visual: Mantener un contraste alto (fondo claro, textos oscuros). Evitar saturar las diapositivas de texto corrido; priorizar diagramas, gráficos estadísticos y capturas del sistema.
+· Dominio de la Exposición: No leer las diapositivas. Estas sirven como soporte visual mientras el expositor demuestra dominio técnico, estadístico e informático.
+2. Estructura Detallada de las Diapositivas (Secuencia Sugerida)
+Diapositiva 1: Carátula e Identidad Institucional
+· Elementos Clave: Logotipo oficial de la Universidad Nacional del Altiplano (UNAP) y de la Facultad.
+· Institución: Nombre completo de la Escuela Profesional de Estadística e Informática.
+· Título del Proyecto: Debe ser claro y reflejar el propósito del aplicacion y la técnica de IA (ej. 'Sistema Inteligente de Predicción de Deserción Estudiantil mediante Redes Neuronales en la UNAP').
+· Datos de Identificación: Nombres y Apellidos de los Graduandos/Autores, nombre del Asesor, Ciudad (Puno) y Año (2026).
+
+Diapositiva 2: Introducción y Justificación
+· Contexto: Contextualizar el escenario actual en el que se desenvuelve el problema. · Justificación Tecnológica: Explicar por qué es necesaria e innovadora la inclusión
+de Inteligencia Artificial en lugar de un sistema transaccional clásico. · Justificación Estadística: Sustentar la importancia del análisis masivo de datos o
+patrones complejos desde la perspectiva analítica y estadística.
+Diapositiva 3: Planteamiento del Problema
+· Problema Central: Descripción breve de la brecha, ineficiencia o cuello de botella identificado en el entorno real.
+· Formulación del Problema: Pregunta general que el aplicacion responde mediante la automatización y la IA.
+· Alcances y Delimitaciones: Limitaciones físicas, de datos o de infraestructura que se consideraron en el proyecto.
+Diapositiva 4: Objetivos del Proyecto
+· Objetivo General: Desarrollar e implementar el aplicacion basado en IA para solucionar el problema formulado.
+· Objetivos Específicos: Desglosar el proceso en hitos (ej. 1. Analizar requerimientos y datos; 2. Diseñar la arquitectura y modelamiento estadístico de la IA; 3. Desarrollar e integrar los componentes de aplicacion; 4. Validar el sistema mediante pruebas funcionales y métricas de precisión).
+Diapositiva 5: Marco Teórico y Estado del Arte
+· Fundamentos de IA: Definición concreta del enfoque de IA seleccionado (Machine Learning, Deep Learning, NLP, Visión Computacional, etc.).
+· Sustento Algorítmico: Breve descripción de los algoritmos base elegidos (ej. Random Forest, SVM, Redes LSTM) y por qué se adaptan al tipo de datos estadísticos recopilados.
+· Antecedentes: Mención concisa de soluciones similares existentes y cuál es el valor agregado de este aplicacion.
+Diapositiva 6: Metodología de Desarrollo
+· Metodología de Aplicacion: Explicar el marco de trabajo utilizado (ej. SCRUM, XP) detallando sprints o fases clave.
+· Ciclo de Vida de los Datos e IA: Mostrar el ciclo seguido para la IA (Recolección > Preprocesamiento -> Modelado -> Evaluación -> Despliegue).
+Nota visual recomendada: Incluir un diagrama de flujo lineal o circular que resuma las fases del proyecto.
+
+Diapositiva 7: Ingeniería de Datos y Análisis Exploratorio (EDA)
+· Base de datos: Detallar el origen de la información, el tamaño de la muestra, cantidad de variables (numéricas y categóricas) y balance de clases.
+· Preprocesamiento Estadístico: Técnicas empleadas para imputación de nulos, normalización, codificación de variables categóricas o balanceo de datos (ej. SMOTE).
+· Análisis Crítico: Insertar gráficos estadísticos clave (histogramas, diagramas de dispersión, matrices de correlación) que justifiquen la selección de variables predictoras.
+Diapositiva 8: Arquitectura y Diseño del Aplicacion
+· Arquitectura del Sistema: Mostrar el diagrama de bloques que describe la interacción entre el Frontend, el Backend, la Base de Datos y la API o servicio que aloja el modelo de IA.
+· Tecnologías e Infraestructura: Stack tecnológico explícito (ej. Python, FastAPI, PostgreSQL, TensorFlow, React, Docker).
+· Flujo de Integración de IA: Cómo se exponen las predicciones o análisis del modelo hacia la interfaz de usuario.
+Diapositiva 9: Entrenamiento y Modelamiento de la IA
+· Estrategia de Validación: Distribución de los datos para entrenamiento (Train), validación (Validation) y prueba (Test) (ej. 70/15/15 o K-Fold Cross Validation).
+· Parámetros del Modelo: Hiperparámetros modificados y proceso de optimización (ej. Grid Search, Learning Rate, optimizadores como Adam).
+· Curvas de Rendimiento: Gráficos de curvas de aprendizaje (Loss vs. Epochs, Accuracy vs. Epochs) para demostrar la ausencia de Overfitting o Underfitting.
+Diapositiva 10: Validación y Métricas Estadísticas de la IA
+· Para Modelos de Clasificación: Mostrar la Matriz de Confusión y explicar la relevancia de los falsos positivos/negativos en el contexto del problema.
+· Métricas Clave de Clasificación: Exponer los valores logrados de Precision, Recall, F1-Score y Accuracy, además de la curva ROC/AUC.
+· Para Modelos de Regresión: Detallar el Error Cuadrático Medio (MSE), Error Absoluto Medio (MAE) y el Coeficiente de Determinación (R²).
+Diapositiva 11: Demostración del Aplicacion (Módulos Críticos)
+· Vistas de Pantalla (UI): Capturas nítidas del sistema enfocado en las funciones donde la Inteligencia Artificial genera valor.
+· Entrada de Datos: Mostrar la entrada de datos por el usuario
+
+· Salida de la IA: Mostrar cómo se presentan las predicciones, gráficos analíticos automatizados, o reportes sugeridos por el modelo de IA.
+Diapositiva 12: Pruebas del Sistema (QA)
+· Pruebas Unitarias e Integración: Resultados de pruebas que garantizan que el código del backend y frontend operan según las reglas de negocio.
+· Pruebas de Aceptación: Validación del aplicacion por parte de los usuarios finales o stakeholders mediante encuestas de usabilidad o metodologías estándar (ej. SUS - System Usability Scale).
+· Rendimiento de la API: Tiempo que tarda el aplicacion en retornar una respuesta desde que se invoca la función de IA (Latencia de inferencia).
+Diapositiva 13: Resultados y Discusión de Impacto
+· Análisis Comparativo: Cuadro comparativo entre el estado inicial sin el aplicacion (procesos manuales, estimaciones subjetivas) y el estado actual (automatizado, basado en IA estadística).
+· Retorno o Beneficio de la Implementación: Beneficios tangibles cuantificados (ej. Reducción del tiempo de procesamiento en un 60%, precisión operativa incrementada al 92%).
+Diapositiva 14: Conclusiones
+· Conclusiones Objetivo-Dependientes: Deben dar respuesta exacta a cada uno de los objetivos específicos planteados en la Diapositiva 4.
+· Síntesis de Logros: Resumen del éxito técnico del aplicacion y la validez estadística del modelo implementado.
+Diapositiva 15: Recomendaciones y Trabajo Futuro
+· Sostenibilidad del Aplicacion: Propuestas para el mantenimiento evolutivo del sistema e infraestructura de servidores.
+· Evolución de la IA: Recomendaciones sobre la frecuencia de reentrenamiento del modelo con nuevos datos de entrada para evitar la degradación del modelo (Data Drift).
+· Escalabilidad: Sugerencias para escalar el aplicacion a la nube o añadir módulos complementarios.
+Diapositiva 16: Referencias Bibliográficas y Cierre
+· Sustento Científico: Listar los principales autores, papers indexados (IEEE, Scopus, etc.) o documentación oficial técnica en formato APA o IEEE.
+
+· Agradecimientos: Texto formal de agradecimiento al jurado y apertura oficial a la ronda de preguntas y debate.
+
+3. Matriz Sugerida de Distribución de Tiempos
+
+Para garantizar que la exposición se mantenga dentro de los 20 minutos reglamentarios, se recomienda enfocar la mayor parte del tiempo en el modelamiento estadístico, la arquitectura de aplicacion y los resultados prácticos.
+
+Bloque Temático
+Introducción, Problema y Objetivos Marco Teórico y Metodología Ingeniería de Datos y EDA (Estadística) Arquitectura, Diseño y Entrenamiento (Informática) Validación Estadística de la IA Demostración del Aplicacion y Pruebas Discusión, Conclusiones y Cierre
+
+Diapositivas 1 al 4 5y6 7 8y9
+10 11 y 12 13 al 16
+
+Tiempo Recomendado 3 minutos 2 minutos 3 minutos 4 minutos
+3 minutos 3 minutos 2 minutos
+
+

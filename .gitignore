@@ -1,0 +1,22 @@
+# Datasets
+CONEJOS/
+CUYES/
+GALLINAS/
+OVEJAS/
+ZORROS/
+dataset_unificado/
+output/
+
+# YOLO weights
+*.pt
+
+# Databases
+*.db
+*.sqlite
+
+# Cache and python environments
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.claude/
+.vscode/

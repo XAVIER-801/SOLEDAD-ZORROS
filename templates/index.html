@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pastor Guardián - Dashboard</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a0e17;
+            color: #e0e0e0;
+            min-height: 100vh;
+        }
+        .header {
+            background: linear-gradient(135deg, #1a1f2e 0%, #0d1321 100%);
+            padding: 16px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #2a2f3e;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .header h1 {
+            font-size: 22px;
+            font-weight: 700;
+            color: #fff;
+        }
+        .header h1 span { color: #f97316; }
+        .header-controls { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+        .header-controls .status-badge {
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .status-badge.online { background: #166534; color: #86efac; }
+        .status-badge.simulation { background: #713f12; color: #fde68a; }
+        .header-controls a {
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 14px;
+            padding: 6px 14px;
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+        .header-controls a:hover { background: #1e293b; color: #fff; }
+        .header-controls a.active { background: #1e40af; color: #fff; }
+        .main { display: flex; gap: 20px; padding: 20px 32px; flex-wrap: wrap; }
+        .video-section { flex: 2; min-width: 480px; }
+        .video-container {
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #2a2f3e;
+            position: relative;
+        }
+        .video-container img {
+            width: 100%;
+            display: block;
+            aspect-ratio: 16/9;
+            object-fit: contain;
+        }
+        .video-overlay {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .video-overlay .badge {
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            background: rgba(0,0,0,0.7);
+        }
+        .badge.fps { color: #67e8f9; }
+        .badge.model { color: #a78bfa; }
+        .badge.resolution { color: #fb923c; }
+        .sidebar { flex: 1; min-width: 280px; display: flex; flex-direction: column; gap: 16px; }
+        .panel {
+            background: #111827;
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid #1f2937;
+        }
+        .panel h3 {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .alert-box {
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: 700;
+            transition: all 0.3s;
+        }
+        .alert-box.normal {
+            background: #052e16;
+            border: 1px solid #166534;
+            color: #86efac;
+        }
+        .alert-box.alert {
+            background: #450a0a;
+            border: 1px solid #dc2626;
+            color: #fca5a5;
+            animation: pulse 1s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        .detection-list { max-height: 300px; overflow-y: auto; }
+        .detection-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #1f2937;
+            font-size: 13px;
+        }
+        .detection-item .class { font-weight: 600; color: #e0e0e0; }
+        .detection-item .conf { color: #94a3b8; }
+        .detection-item .alert-icon { color: #ef4444; font-weight: 700; }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        .stat-card {
+            background: #1a1f2e;
+            border-radius: 8px;
+            padding: 14px;
+            text-align: center;
+        }
+        .stat-card .value { font-size: 24px; font-weight: 700; color: #fff; }
+        .stat-card .label { font-size: 11px; color: #64748b; margin-top: 4px; }
+        .detection-controls { display: flex; gap: 8px; }
+        .btn {
+            padding: 6px 14px;
+            border-radius: 6px;
+            border: none;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-primary { background: #2563eb; color: #fff; }
+        .btn-primary:hover { background: #1d4ed8; }
+        .btn-danger { background: #dc2626; color: #fff; }
+        .btn-danger:hover { background: #b91c1c; }
+        .btn-secondary { background: #374151; color: #e0e0e0; }
+        .btn-secondary:hover { background: #4b5563; }
+        .label-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        .label-badge.normal { background: #166534; color: #86efac; }
+        .label-badge.alert { background: #991b1b; color: #fca5a5; }
+        @media (max-width: 768px) {
+            .main { padding: 12px; }
+            .video-section { min-width: 100%; }
+            .sidebar { min-width: 100%; }
+            .header { padding: 12px 16px; }
+            .header h1 { font-size: 18px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🦊 Pastor <span>Guardián</span></h1>
+        <div class="header-controls">
+            <span class="status-badge {{ 'online' if camera_mode == 'fisica' else 'simulation' }}">
+                {{ '📷 Cámara física' if camera_mode == 'fisica' else '🖥️ Simulación' }}
+            </span>
+            <span style="color:#94a3b8;font-size:13px">Modelo: <strong>{{ model_name }}</strong></span>
+            <span style="color:#94a3b8;font-size:13px">Clases: 
+                {% for cls in model_classes %}
+                <span class="label-badge {{ 'alert' if loop.index0 == 0 else 'normal' }}">{{ cls }}</span>
+                {% endfor %}
+            </span>
+            <a href="/" class="active">Dashboard</a>
+            <a href="/config">Configuración</a>
+            <a href="/history">Historial</a>
+        </div>
+    </div>
+    <div class="main">
+        <div class="video-section">
+            <div class="video-container" style="position:relative;">
+                <!-- Elemento de video oculto para capturar la cámara del dispositivo cliente -->
+                <video id="clientVideo" autoplay playsinline style="display:none; width:100%; aspect-ratio:16/9; object-fit:cover;"></video>
+                <!-- Canvas oculto para extraer los frames -->
+                <canvas id="clientCanvas" style="display:none;"></canvas>
+                
+                <!-- Imagen donde el servidor devuelve los frames procesados con las cajas YOLO -->
+                <img id="videoFeed" src="/video_feed" alt="Video Feed" style="width: 100%;">
+                
+                <div class="video-overlay">
+                    <span class="badge fps" id="fpsBadge">0 FPS</span>
+                    <span class="badge model">{{ model_name }}</span>
+                    <button id="toggleDeviceCamBtn" class="badge" style="background:#2563eb; color:white; border:none; cursor:pointer; font-weight:600; margin-left:10px;" onclick="useDeviceCamera()">📸 Usar mi Cámara</button>
+                    <button id="switchCamBtn" class="badge" style="background:#7c3aed; color:white; border:none; cursor:pointer; font-weight:600; margin-left:6px; display:none;" onclick="switchCamera()" title="Cambiar cámara">🔄 Cambiar</button>
+                </div>
+            </div>
+        </div>
+        <div class="sidebar">
+            <div class="panel">
+                <h3>🚨 Estado</h3>
+                <div class="alert-box normal" id="alertBox">
+                    ✅ Sin amenazas detectadas
+                </div>
+            </div>
+
+            <div class="panel">
+                <h3>📊 Estadísticas</h3>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="value" id="totalDetections">0</div>
+                        <div class="label">Detecciones</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="value" id="totalAlerts">0</div>
+                        <div class="label">Alertas</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="value" id="fpsDisplay">0</div>
+                        <div class="label">FPS</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="value" id="sessionCount">0</div>
+                        <div class="label">Sesiones</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel">
+                <h3>📋 Últimas detecciones</h3>
+                <div class="detection-list" id="detectionList">
+                    <div style="color:#64748b;text-align:center;padding:16px">Esperando detecciones...</div>
+                </div>
+            </div>
+
+            <div class="panel">
+                <h3>🎯 Acciones rápidas</h3>
+                <div class="detection-controls">
+                    <button class="btn btn-secondary" onclick="clearHistory()">Limpiar historial</button>
+                    <button class="btn btn-secondary" onclick="location.reload()">Reconectar</button>
+                </div>
+                <div style="margin-top:12px">
+                    <label class="btn btn-primary" style="display:inline-block;cursor:pointer;text-align:center;width:100%">
+                        📁 Probar imagen
+                        <input type="file" accept="image/*" style="display:none" id="imageInput" onchange="testImage(event)">
+                    </label>
+                    <div id="testResult" style="margin-top:8px;display:none"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let alertCount = 0;
+        let detectionCount = 0;
+        let lastFrameTime = performance.now();
+        let fpsValues = [];
+
+        let usingLocalCamera = false;
+        let localStream = null;
+        let captureInterval = null;
+
+        const ws = new WebSocket(`ws://${location.host}/ws`);
+
+        ws.onopen = () => {
+            console.log('WebSocket conectado');
+            setInterval(() => {
+                if (ws.readyState === WebSocket.OPEN) {
+                    ws.send(JSON.stringify({ action: 'ping' }));
+                }
+            }, 5000);
+        };
+
+        ws.onmessage = (event) => {
+            try {
+                const data = JSON.parse(event.data);
+                if (data.alert !== undefined) {
+                    updateAlert(data);
+                }
+                // Si estamos usando la cámara local, el servidor devuelve la imagen procesada aquí
+                if (usingLocalCamera && data.image) {
+                    document.getElementById('videoFeed').src = 'data:image/jpeg;base64,' + data.image;
+                }
+            } catch (e) {}
+        };
+
+        ws.onclose = () => {
+            console.log('WebSocket desconectado, reconectando...');
+            setTimeout(() => location.reload(), 3000);
+        };
+
+        const CLASS_EMOJIS = {0: '🦊', 1: '🐑', 2: '🐔', 3: '🐹', 4: '🐇'};
+
+function updateAlert(data) {
+            const alertBox = document.getElementById('alertBox');
+            const list = document.getElementById('detectionList');
+
+            if (data.alert) {
+                alertCount++;
+                detectionCount += (data.detections || []).length;
+                alertBox.className = 'alert-box alert';
+                alertBox.innerHTML = '🔴 ¡ALERTA! Zorro detectado';
+                document.title = '🔴 ¡ALERTA! - Pastor Guardián';
+                try {
+                    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.frequency.value = 880;
+                    osc.type = 'sine';
+                    gain.gain.value = 0.3;
+                    osc.start();
+                    setTimeout(() => { osc.stop(); ctx.close(); }, 300);
+                } catch(e) {}
+            } else {
+                alertBox.className = 'alert-box normal';
+                alertBox.innerHTML = '✅ Sin amenazas detectadas';
+                document.title = 'Pastor Guardián - Dashboard';
+            }
+
+        const emojis = {0: '🦊', 1: '🐑', 2: '🐔', 3: '🐹', 4: '🐇'};
+        const detections = data.detections || [];
+        if (detections.length > 0) {
+            list.innerHTML = detections.map(d => `
+                <div class="detection-item">
+                    <span>
+                        <span class="label-badge ${d.alert ? 'alert' : 'normal'}">${d.alert ? '🔴' : '🟢'}</span>
+                        <span class="class">${emojis[d.class_id] || ''} ${d.class}</span>
+                    </span>
+                    <span class="conf">${(d.confidence * 100).toFixed(0)}%</span>
+                </div>
+            `).join('');
+        }
+        }
+
+        const img = document.getElementById('videoFeed');
+
+        img.onload = () => {
+            const now = performance.now();
+            const dt = now - lastFrameTime;
+            lastFrameTime = now;
+            if (dt > 0) {
+                const fps = 1000 / dt;
+                fpsValues.push(fps);
+                if (fpsValues.length > 30) fpsValues.shift();
+                const avgFps = Math.round(fpsValues.reduce((a, b) => a + b, 0) / fpsValues.length);
+                document.getElementById('fpsBadge').textContent = `${avgFps} FPS`;
+                document.getElementById('fpsDisplay').textContent = avgFps;
+            }
+        };
+
+        async function loadStats() {
+            try {
+                const res = await fetch('/api/stats');
+                const stats = await res.json();
+                document.getElementById('totalDetections').textContent = stats.total_detections;
+                document.getElementById('totalAlerts').textContent = stats.total_alerts;
+                document.getElementById('sessionCount').textContent = stats.detection_sessions;
+            } catch (e) {}
+        }
+
+        async function clearHistory() {
+            if (!confirm('¿Limpiar todo el historial de detecciones?')) return;
+            try {
+                const res = await fetch('/api/history?limit=1000');
+                const items = await res.json();
+                for (const item of items) {
+                    await fetch(`/api/detection_image/${item.id}`, { method: 'DELETE' });
+                }
+                loadStats();
+            } catch (e) {
+                alert('No se pudo limpiar el historial');
+            }
+        }
+
+        async function testImage(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const formData = new FormData();
+            formData.append('file', file);
+            const resultDiv = document.getElementById('testResult');
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = '⏳ Procesando...';
+            try {
+                const res = await fetch('/detect_image', { method: 'POST', body: formData });
+                const data = await res.json();
+                if (data.image) {
+                    resultDiv.innerHTML = `
+                        <img src="data:image/jpeg;base64,${data.image}" style="width:100%;border-radius:8px;margin-top:8px">
+                        <div style="margin-top:8px;font-size:13px">
+                            ${data.detections.map(d =>
+                                `<span class="label-badge ${d.alert ? 'alert' : 'normal'}">${d.class} ${(d.confidence*100).toFixed(0)}%</span>`
+                            ).join(' ') || '<span style="color:#94a3b8">Sin detecciones</span>'}
+                        </div>
+                    `;
+                }
+            } catch(e) {
+                resultDiv.innerHTML = '<span style="color:#ef4444">Error al procesar imagen</span>';
+            }
+            event.target.value = '';
+        }
+
+        // Estado de la cámara activa: 'environment' = trasera, 'user' = frontal
+        let currentFacingMode = 'environment';
+
+        async function startStream(facingMode) {
+            const video = document.getElementById('clientVideo');
+            const imgFeed = document.getElementById('videoFeed');
+            const canvas = document.getElementById('clientCanvas');
+
+            // Detener stream anterior si existe
+            if (localStream) {
+                localStream.getTracks().forEach(track => track.stop());
+                localStream = null;
+            }
+            if (captureInterval) {
+                clearInterval(captureInterval);
+                captureInterval = null;
+            }
+
+            // Intentar primero con 'exact' (fuerza la cámara trasera)
+            let constraints;
+            try {
+                constraints = { video: { facingMode: { exact: facingMode } } };
+                localStream = await navigator.mediaDevices.getUserMedia(constraints);
+            } catch (e) {
+                // Si 'exact' falla, usar 'ideal' como fallback
+                console.warn("exact facingMode falló, usando ideal:", e.message);
+                constraints = { video: { facingMode: { ideal: facingMode } } };
+                localStream = await navigator.mediaDevices.getUserMedia(constraints);
+            }
+
+            video.srcObject = localStream;
+            video.play();
+            imgFeed.src = "";
+
+            // Iniciar envío de frames por WebSocket
+            const context = canvas.getContext('2d');
+            captureInterval = setInterval(() => {
+                if (ws.readyState === WebSocket.OPEN && video.readyState === video.HAVE_ENOUGH_DATA) {
+                    canvas.width = 640;
+                    canvas.height = 480;
+                    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+                    const dataUrl = canvas.toDataURL('image/jpeg', 0.6);
+                    const base64Data = dataUrl.split(',')[1];
+                    ws.send(JSON.stringify({ action: 'client_frame', image: base64Data }));
+                }
+            }, 100);
+        }
+
+        async function switchCamera() {
+            currentFacingMode = (currentFacingMode === 'environment') ? 'user' : 'environment';
+            const label = currentFacingMode === 'environment' ? '📷 Trasera' : '🤳 Frontal';
+            document.getElementById('switchCamBtn').textContent = '🔄 ' + label;
+            try {
+                await startStream(currentFacingMode);
+            } catch(err) {
+                alert("No se pudo cambiar la cámara: " + err.message);
+            }
+        }
+
+        async function useDeviceCamera() {
+            const btn = document.getElementById('toggleDeviceCamBtn');
+            const switchBtn = document.getElementById('switchCamBtn');
+            const video = document.getElementById('clientVideo');
+            const imgFeed = document.getElementById('videoFeed');
+
+            if (!usingLocalCamera) {
+                try {
+                    currentFacingMode = 'environment'; // Siempre comenzar con trasera
+                    await startStream(currentFacingMode);
+
+                    usingLocalCamera = true;
+                    btn.textContent = "🔌 Usar Servidor";
+                    btn.style.background = "#dc2626";
+                    switchBtn.style.display = 'inline-block';
+                    switchBtn.textContent = '🔄 Cambiar';
+                } catch (err) {
+                    alert("No se pudo acceder a la cámara: " + err.message);
+                    console.error(err);
+                }
+            } else {
+                // Volver a la cámara del servidor
+                if (captureInterval) clearInterval(captureInterval);
+                if (localStream) {
+                    localStream.getTracks().forEach(track => track.stop());
+                    localStream = null;
+                }
+                video.srcObject = null;
+                usingLocalCamera = false;
+                btn.textContent = "📸 Usar mi Cámara";
+                btn.style.background = "#2563eb";
+                switchBtn.style.display = 'none';
+                
+                // Restablecer la transmisión por defecto del servidor
+                imgFeed.src = "/video_feed";
+            }
+        }
+
+        setInterval(loadStats, 2000);
+        loadStats();
+    </script>
+</body>
+</html>

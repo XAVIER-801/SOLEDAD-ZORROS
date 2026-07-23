@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    container_name: pastor_guardian_web
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+      # Evitar que el entorno virtual local de Python (si existe) interfiera con las librerías del contenedor
+      - /app/venv
+      - /app/.venv
+    restart: unless-stopped
+    environment:
+      - PORT=8000
+
+  tunnel:
+    image: cloudflare/cloudflared:latest
+    container_name: pastor_guardian_tunnel
+    restart: always
+    depends_on:
+      - web
+    command: tunnel --url http://web:8000
